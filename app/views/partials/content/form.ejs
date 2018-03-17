@@ -1,0 +1,101 @@
+
+  
+   
+   <div class="form-container">
+    
+    <div class="wrapper">
+      <div class="company-info">
+        <h1>GET 15% OFF YOUR TICKETS TO ELEVATION</h1>
+        
+      </div>
+      <div class="contact">
+        <h3>Your Info Below</h3>
+
+        <div class="alert">Your tickets have been sent to your email</div>
+
+        <form id="contactForm">
+          <p>
+            <label>Name</label>
+            <input type="text" name="name" id="name" required>
+          </p>
+
+          <p>
+            <label>Email Address</label>
+            <input type="text" name="email" id="email" required>
+          </p>
+
+
+          <p class="full">
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+
+  <script>
+  // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyANjOX05biWu5EbNAAqoRW3Bu0647gCKdo",
+      authDomain: "contactform-ce6fd.firebaseapp.com",
+      databaseURL: "https://contactform-ce6fd.firebaseio.com",
+      projectId: "contactform-ce6fd",
+      storageBucket: "",
+      messagingSenderId: "978007978339"
+    };
+    firebase.initializeApp(config);
+
+    // Reference messages collection
+
+    var messagesRef = firebase.database().ref('messages');
+
+    // Listen for form Submit
+    document.getElementById('contactForm').addEventListener('submit', submitForm);
+
+    // Submit form
+    function submitForm(e){
+      e.preventDefault();
+
+      // Get valuesssss
+
+      var name = getInputVal('name');
+      
+      var email = getInputVal('email');
+      
+
+      // Save message
+      saveMessage(name, company, email, phone, message);
+
+      // Show alert
+      document.querySelector('.alert').style.display = 'block';
+
+      // Hide alert after 3 seconds
+      setTimeout(function(){
+        document.querySelector('.alert').style.display = 'none';
+      },3000);
+
+    // Reset form
+      document.getElementById('contactForm').reset();
+
+    }
+    // Function to get form values
+    function getInputVal(id){
+        return document.getElementById(id).value;
+    }
+
+    // Save messages to firebaze
+
+    function saveMessage(name, company, email, phone, message){
+      var newMessageRef = messagesRef.push();
+      newMessageRef.set({
+        name: name,
+        email: email   
+      })
+
+    }
+
+  </script>
+
